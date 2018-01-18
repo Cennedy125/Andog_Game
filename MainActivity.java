@@ -1,78 +1,46 @@
-package com.example.demouser.andog_local;
+package com.example.demouser.andog;
 
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
-
-    int happiness = 100;
-    int hunger = 100;
-    int happyHunger = 0;
-    TextView textView;
-    TextView textView2;
-    Button button;
-
+ImageView myDog;
+Button myFood;
+Button myWater;
+Button myNap;
+TextView myPetText;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        textView = findViewById(R.id.textView);
-        textView2 = findViewById(R.id.textView2);
-        button = findViewById(R.id.button);
+        myDog = findViewById(R.id.myDog);
+        myFood = findViewById(R.id.myFood);
+        myWater = findViewById(R.id.myWater);
+        myNap = findViewById(R.id.myNap);
+        myPetText= findViewById(R.id.myPetText);
+        final ArrayList<Integer> myImageList = new ArrayList<>();
+        myImageList.add(R.drawable.happy_pup);
+        myImageList.add(R.drawable.very_happy_pup);
+        myImageList.add(R.drawable.sad_pup);
+        myImageList.add(R.drawable.tired_pup);
 
-        textView.setText("Hunger: "+hunger);
-        textView2.setText("Happiness: "+happiness);
+
+        //myImageView.setImageResource(myImageList.get(i));
+        myDog.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                myPetText.setText("");
+                myDog.setImageResource(myImageList.get(1));
 
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(hunger < 100) {
-                    hunger += 1;
-                    happyHunger -= 1;
-                    textView.setText("Hunger: " + hunger);
-                    if(hunger == 100){
-                        happyHunger = 0;
-                        happiness = 100;
-                        textView2.setText("Happiness: "+happiness);
-                    }
-                }
             }
-        });
-
-        statDecrease();
 
 
-
-
-    }
-
-    private void statDecrease(){
-
-
-        if(hunger > 0) {
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    hunger -= 1;
-                    textView.setText("Hunger: " + hunger);
-                    happyHunger += 1;
-                    setHappiness();
-                    statDecrease();
-                }
-            },1000);
-        }
-    }
-
-    private void setHappiness (){
-        if (happiness > 0 && happyHunger % 2 == 0){
-            happiness -= 1;
-            textView2.setText("Happiness: "+happiness);
-        }
+    });
     }
 }
